@@ -1,1 +1,1 @@
-const pokemonNames = ['gengar', 'eternatus', 'mewtwo', 'lugia', 'zekrom', 'reshiram', 'kyurem', 'xerneas', 'yveltal', 'kyogre', 'dialga'];
+const pokemonNames = ['delphox', 'kyogre', 'luxray', 'decidueye', 'articuno', 'zamazenta', 'naganadel', 'groudon', 'noivern', 'mewtwo', 'scyther', 'tyranitar', 'spectrier', 'zekrom', 'absol', 'magearna', 'sylveon'];

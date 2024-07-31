@@ -1,11 +1,14 @@
-
-
 document.addEventListener('DOMContentLoaded', () => {
     const pokemonList = document.getElementById('pokemonList');
-
+    const addBtn = document.getElementById('addBtn');
+    const inputField = document.querySelector('.text');
 
     const getPokemonDetails = async (name) => {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);
+        if (!response.ok) {
+            alert('Pokémon não encontrado!');
+            return null;
+        }
         const data = await response.json();
         return {
             name: data.name,
@@ -14,9 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     };
 
-
     const addPokemonToList = async (pokemonName) => {
         const pokemonDetails = await getPokemonDetails(pokemonName);
+        if (!pokemonDetails) return;
 
         const listItem = document.createElement('li');
         listItem.classList.add('pokemon', pokemonDetails.types[0]);
@@ -52,9 +55,27 @@ document.addEventListener('DOMContentLoaded', () => {
         listItem.appendChild(nameSpan);
         listItem.appendChild(detailDiv);
 
+
+        listItem.addEventListener('click', () => {
+            pokemonList.removeChild(listItem);
+            const index = pokemonNames.indexOf(pokemonName.toLowerCase());
+            if (index > -1) {
+                pokemonNames.splice(index, 1);
+            }
+        });
+
         pokemonList.appendChild(listItem);
     };
 
+    addBtn.addEventListener('click', async () => {
+        const pokemonName = inputField.value.trim();
+        if (pokemonName) {
+            await addPokemonToList(pokemonName);
+            pokemonNames.push(pokemonName.toLowerCase());
+            inputField.value = ''; 
+        }
+    });
+
+    
     pokemonNames.forEach(pokemonName => addPokemonToList(pokemonName));
 });
-
